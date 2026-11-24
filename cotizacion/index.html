@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif:wght@600;700&family=Noto+Serif+SC:wght@600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#14213d; --red:#c0392b; --red-dark:#9e2b1f; --gold:#d4a84b; --paper:#faf7f2; --paper-2:#f1ebe1; --text:#1d2433; --muted:#5b6477; --line:#e3dccf; --ok:#1e7f4f; --wa:#25d366; --mp:#009ee3;
+  :root { --ink:#14213d; --red:#c0392b; --red-dark:#9e2b1f; --gold:#d4a84b; --paper:#faf7f2; --paper-2:#f1ebe1; --text:#1d2433; --muted:#5b6477; --line:#e3dccf; --ok:#1e7f4f; --wa:#25d366;
     --font-sans:"Noto Sans","Noto Sans SC",system-ui,sans-serif; --font-serif:"Noto Serif","Noto Serif SC",Georgia,serif; }
   html[lang^="zh"] { --font-sans:"Noto Sans SC","Noto Sans","PingFang SC",sans-serif; --font-serif:"Noto Serif SC","Noto Serif",serif; }
   * { box-sizing:border-box; }
@@ -41,7 +41,6 @@
   .tile b { display:block; font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-bottom:4px; }
   .tile span { font-weight:600; color:var(--ink); }
   .btn { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:13px 20px; border-radius:999px; font-weight:600; text-decoration:none; border:0; cursor:pointer; font:inherit; font-weight:600; width:100%; }
-  .btn-mp { background:var(--mp); color:#fff; }
   .btn-wa { background:var(--wa); color:#073b1c; }
   .btn-outline { background:transparent; color:var(--ink); border:1.5px solid var(--ink); }
   .btn svg { width:20px; height:20px; flex:none; }
@@ -49,7 +48,6 @@
   .pay { background:var(--paper-2); border-radius:12px; padding:16px 18px; margin:18px 0; }
   .pay h3 { font-size:1.05rem; }
   .pay .amount { font-family:var(--font-serif); font-size:1.6rem; color:var(--ink); }
-  .alias { font-family:ui-monospace, SFMono-Regular, Menlo, monospace; background:#fff; border:1px dashed var(--line); padding:8px 12px; border-radius:8px; display:inline-block; margin-top:6px; user-select:all; }
   ol.steps { padding-left:20px; margin:8px 0 0; }
   ol.steps li { margin-bottom:6px; }
   .notes { background:#fff8e6; border-left:3px solid var(--gold); padding:10px 14px; border-radius:6px; margin:16px 0; font-size:.92rem; white-space:pre-line; }
@@ -84,10 +82,9 @@ const T = {
     leg:{simple:'Legalización CTPCBA (trámite simple)', urgente:'Legalización CTPCBA (trámite urgente)'}, legQ:'documento(s)',
     urg:'Recargo por urgencia', total:'Total', incl:'Honorarios profesionales. Incluye traducción, firma y sello de traductor público.',
     tEntrega:'Entrega', tFormato:'Formato de entrega', fmt:{digital:'PDF con firma digital y legalización digital del CTPCBA (misma validez que la ológrafa)'},
-    payT:'Para confirmar', payP:'Se abona una seña del {pct} % y el saldo contra entrega.', sena:'Seña', saldo:'Saldo contra entrega',
-    mp:'Pagar la seña con Mercado Pago', alias:'O por transferencia al alias', aliasHint:'Enviame el comprobante por WhatsApp.',
-    wa:'Confirmar por WhatsApp', waMsg:'Hola Matías, confirmo el presupuesto {n} por {total}. Te envío el comprobante de la seña y el documento.',
-    print:'Guardar en PDF', stepsT:'Después de la seña', steps:['Me enviás el escaneo o la foto completa y legible del documento original (PDF o imagen). Con ese archivo ya se realiza la traducción: no hace falta traer el papel.','Traduzco, firmo y gestiono la legalización en el CTPCBA.','Te aviso cuando esté lista y te envío el PDF por WhatsApp o correo.'],
+    payT:'Para confirmar', payP:'Confirmame por WhatsApp y te paso los datos para abonar la seña del {pct} %. El saldo se abona contra entrega.', sena:'Seña', saldo:'Saldo contra entrega',
+    wa:'Confirmar por WhatsApp', waMsg:'Hola Matías, confirmo el presupuesto {n} por {total}. ¿Me pasás los datos para la seña? Te envío el documento.',
+    print:'Guardar en PDF', stepsT:'Después de confirmar', steps:['Te paso los datos de pago por WhatsApp y abonás la seña.','Me enviás el escaneo o la foto completa y legible del documento original (PDF o imagen). Con ese archivo ya se realiza la traducción: no hace falta traer el papel.','Traduzco, firmo y gestiono la legalización en el CTPCBA.','Te aviso cuando esté lista y te envío el PDF por WhatsApp o correo.'],
     notes:'Observaciones', expired:'Este presupuesto venció. Escribime y lo actualizo en el día.',
     invalidT:'Enlace no válido', invalidP:'El enlace del presupuesto está incompleto. Escribime por WhatsApp y te lo reenvío.',
     foot:'Traductor Público de idioma chino, matriculado en el Colegio de Traductores Públicos de la Ciudad de Buenos Aires.'
@@ -98,10 +95,9 @@ const T = {
     leg:{simple:'CTPCBA 协会认证（普通）', urgente:'CTPCBA 协会认证（加急）'}, legQ:'份',
     urg:'加急费', total:'合计', incl:'专业服务费。包含翻译、公共翻译员签字及盖章。',
     tEntrega:'交付日期', tFormato:'交付形式', fmt:{digital:'电子签名并经 CTPCBA 电子认证（数字认证）的 PDF，与手写纸质认证效力相同'},
-    payT:'确认方式', payP:'支付 {pct}% 定金，余款交付时付清。', sena:'定金', saldo:'交付时付清余款',
-    mp:'通过 Mercado Pago 支付定金', alias:'或转账至别名（alias）', aliasHint:'请通过 WhatsApp 发送付款凭证。',
-    wa:'通过 WhatsApp 确认', waMsg:'您好 Matías，我确认报价单 {n}，金额 {total}。我将发送定金凭证和文件。',
-    print:'保存为 PDF', stepsT:'支付定金后', steps:['请发送原件完整、清晰的扫描件或照片（PDF 或图片）。凭此即可完成翻译，无需送交纸质原件。','我进行翻译、签字，并到 CTPCBA 办理认证。','完成后通知您，通过 WhatsApp 或邮件发送 PDF。'],
+    payT:'确认方式', payP:'请通过 WhatsApp 确认，我会发送支付 {pct}% 定金的付款信息。余款交付时付清。', sena:'定金', saldo:'交付时付清余款',
+    wa:'通过 WhatsApp 确认', waMsg:'您好 Matías，我确认报价单 {n}，金额 {total}。请发送定金付款信息，我随后把文件发给您。',
+    print:'保存为 PDF', stepsT:'确认后', steps:['我通过 WhatsApp 发送付款信息，您支付定金。','请发送原件完整、清晰的扫描件或照片（PDF 或图片）。凭此即可完成翻译，无需送交纸质原件。','我进行翻译、签字，并到 CTPCBA 办理认证。','完成后通知您，通过 WhatsApp 或邮件发送 PDF。'],
     notes:'备注', expired:'此报价单已过期。请联系我，当天更新。',
     invalidT:'链接无效', invalidP:'报价链接不完整。请通过 WhatsApp 联系我，我会重新发送。',
     foot:'中文公共翻译员，布宜诺斯艾利斯市公共翻译员协会（CTPCBA）注册。'
@@ -168,8 +164,6 @@ function render() {
           <div class="tile"><b>${t.saldo}</b><span>${money(total - sena)}</span></div>
         </div>
         <div class="actions">
-          ${d.mp ? `<a class="btn btn-mp" href="${esc(d.mp)}" target="_blank" rel="noopener">${t.mp}</a>` : ''}
-          ${d.al ? `<div>${t.alias}: <span class="alias">${esc(d.al)}</span><div class="sub">${t.aliasHint}</div></div>` : ''}
           <a class="btn btn-wa" href="${waUrl(waMsg)}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0C5.5 0 .2 5.3.2 11.9c0 2.1.5 4.1 1.6 5.9L0 24l6.4-1.7a11.9 11.9 0 0 0 5.7 1.5c6.6 0 11.9-5.3 11.9-11.9 0-3.2-1.2-6.2-3.5-8.4z"/></svg>${t.wa}</a>
           <button class="btn btn-outline" type="button" onclick="window.print()">${t.print}</button>
         </div>
